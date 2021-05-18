@@ -1,17 +1,15 @@
 # hrmApp.N-Layer.MVC
 GDF szakdolgozat forráskód - 2021
 
-
-
 ### Human Resource Manager Application
 
 ## The main purpose of application is:
 Users with custom roles can manage data and their relationships of Projects-, Organizations and Employees
 
 
-#### Features
+### Features
 
-### N-Layer architecture
+## N-Layer architecture
 	Core
 	Data
 	Services
@@ -21,6 +19,11 @@ Users with custom roles can manage data and their relationships of Projects-, Or
 	.NET Core 3.1
 		Identity
 		EntityFramework
+
+		MVC Pattern
+		Repository Pattern
+		UnitOfWork Pattern
+		Global Error Handling
 
 ## Database
 	SQL Server
