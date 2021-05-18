@@ -6,7 +6,7 @@
 GDF 2021 - Gasparek Ferenc | DWWPR2
 
 ## The main purpose of application
-Users with custom roles can manage data and their relationships of Projects-, Organizations and Employees
+Users with custom roles can manage data and their relationships of Projects-, Organizations and Employees.
 
 
 ### Features
@@ -27,15 +27,15 @@ Users with custom roles can manage data and their relationships of Projects-, Or
 		UnitOfWork Pattern
 		Global Error Handling
 
-## Database
+## Database engine
 	SQL Server
 
-### Libraries
+### Server side libraries
 	AutoMapper
 	FluentValidation
 
 
-### Client side libraries:
+### Client side libraries
 	AdminLTE 3.1 - Bootstrap 4
 	DataTables 1.10.24
 	Bootstrap Duallistbox - v4.0.2
