@@ -17,12 +17,12 @@ Users with custom roles can manage data and their relationships of Projects-, Or
 	Services
 	Web
 
-### Development with
-.NET Core 3.1
-	Identity
-	EntityFramework
+## Development with
+	.NET Core 3.1
+		Identity
+		EntityFramework
 
-## Database:
+## Database
 	SQL Server
 
 ### Libraries
