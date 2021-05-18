@@ -6,7 +6,7 @@
 GDF 2021 - Gasparek Ferenc | DWWPR2
 
 ## The main purpose of application
-Users with custom roles can manage data and their relationships of Projects-, Organizations and Employees.
+Users with custom roles can manage data and their relationships of Projects, Organizations and Employees.
 
 
 ### Features
