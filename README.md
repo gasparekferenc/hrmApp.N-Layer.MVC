@@ -1,9 +1,11 @@
 # hrmApp.N-Layer.MVC
-GDF szakdolgozat forráskód - 2021
 
 ### Human Resource Manager Application
 
-## The main purpose of application is:
+### Szakdolgozat forráskód
+GDF 2021 - Gasparek Ferenc | DWWPR2
+
+## The main purpose of application
 Users with custom roles can manage data and their relationships of Projects-, Organizations and Employees
 
 
