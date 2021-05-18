@@ -1,0 +1,67 @@
+@model hrmApp.Web.ViewModels.EmployeeViewModels.EmployeeIndexViewModel
+
+@{
+    Layout = "Layout/_LayoutTable";
+    ViewData["Title"] = "Munkavállaló";
+    ViewData["CardHeaderName"] = ViewData["Title"] + " létrehozás";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+    ViewData["CreateButton"] = true;
+}
+
+<div class="card-body">
+    <table id="hrmTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].SSNumber)</th>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].POEmployee.FirstOrDefault().ProjectOrganization.Organization.OrganizationName)</th>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].ProcessStatus.StatusName)</th>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].Job.JobName)</th>
+                <th>Műveletek</th>
+            </tr>
+        </thead>
+        @if(Model.CurrentProjectId != 0){
+            <tbody>
+                @foreach (var employee in Model.Employees)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => employee.FullName)</td>
+                        <td>@Html.DisplayFor(modelItem => employee.SSNumber)</td>
+                        <td>@Html.DisplayFor(modelItem => employee.POEmployee.FirstOrDefault().ProjectOrganization.Organization.OrganizationName)</td>
+                        <td>@Html.DisplayFor(modelItem => employee.ProcessStatus.StatusName)</td>
+                        <td>@Html.DisplayFor(modelItem => employee.Job.JobName)</td>
+
+                        <td class="align-middle">
+                            <div class="row justify-content-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-secondary" asp-action="DataSheet" asp-route-id="@employee.Id"
+                                        data-toggle="tooltip" title="Szerkesztés">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@employee.Id"
+                                        data-toggle="tooltip" title="Részletek">
+                                        <i class="fas fa-file-alt"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-action="Delete" asp-route-id="@employee.Id"
+                                        data-toggle="tooltip" title="Törlés">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        }
+        else{            
+        <p>Nincs Projekt...</p>
+        }
+    </table>
+    <!-- /.table-responsive -->
+</div>
+<!-- /.card-body -->
+
+<!-- Init Tables -->
+@section InitTableScripts {
+    <partial name="_InitDataTablesScript" />
+}

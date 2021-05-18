@@ -1,0 +1,86 @@
+﻿@model hrmApp.Web.ViewModels.ManageViewModels.ProfilDataViewModel
+@{
+    Layout = "Layout/_LayoutCard";
+    ViewData["Title"] = "Profil adatok";
+    ViewData["CardTitleName"] = ViewData["Title"] + " módosítása";
+}
+
+
+<form asp-action="ChangeProfilData">
+    @* <input asp-for="Code" type="hidden" />*@
+    @*<input asp-for="UserId" type="hidden" /> *@
+    <input asp-for="Email" type="hidden" />
+
+    <blockquote class="bg-light">
+        <p>@Html.DisplayNameFor(model => model.Email) -
+            <span class="text-primary">@Html.DisplayFor(model => model.Email)</span>
+        </p>
+    </blockquote>
+
+    <!-- .card-body -->
+    <div class="card-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @* <div asp-validation-summary="All" class="text-danger"></div> *@
+        <div class="bg-light" style="padding: 10px;">
+            Profil adatok módosítása
+        </div>
+        <hr>
+
+        <div class="form-group">
+            <label asp-for="SurName"></label>
+            <div class="input-group">
+                <input asp-for="SurName" class="form-control" placeholder="Vezetéknév" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="SurName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ForeName"></label>
+            <div class="input-group">
+                <input asp-for="ForeName" class="form-control" placeholder="Keresztnév" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="ForeName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PhoneNumber"></label>
+            <div class="input-group">
+                <input asp-for="PhoneNumber" class="form-control"
+                    placeholder="@Html.DisplayFor(model => model.PhoneNumber)" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-phone"></span>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+    </div>
+    <!-- /.card-body -->
+    <!-- card-footer -->
+    <div class="card-footer">
+        <div>
+            <div class="row justify-content-center">
+                <div class="col-md-3 form-group">
+                    <input class="btn btn-primary btn-block" type="submit" value="Mentés" />
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-secondary btn-block" asp-action="Index" asp-controller="Home">Vissza</a>
+                    @* <a class="btn btn-secondary btn-block" onclick="window.history.back();">Vissza</a> *@
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.card-footer -->
+</form>

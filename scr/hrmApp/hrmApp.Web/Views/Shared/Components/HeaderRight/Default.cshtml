@@ -1,0 +1,25 @@
+﻿@using hrmApp.Web.Views.Shared.Components.HeaderProjectMenu
+@using hrmApp.Web.Views.Shared.Components.HeaderAccountMenu
+
+<!-- Right navbar links -->
+<ul class="navbar-nav ml-auto">
+    <!-- Project Dropdown Menu -->
+    @(await Component.InvokeAsync<HeaderProjectMenuViewComponent>())
+    <!-- Account Dropdown Menu -->
+    @(await Component.InvokeAsync<HeaderAccountMenuViewComponent>())
+    <!-- Full Screen -->
+    <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+    </li>
+    <!-- Control Sidebar -->
+    @if (Context.Request.Path.ToUriComponent().Contains("DataSheet"))
+    {
+        <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+                <i class="fas fa-th-large"></i>
+            </a>
+        </li>
+    }
+</ul>

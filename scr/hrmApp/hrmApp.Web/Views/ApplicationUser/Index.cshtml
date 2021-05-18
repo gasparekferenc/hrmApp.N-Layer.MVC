@@ -1,0 +1,96 @@
+@model IEnumerable<hrmApp.Web.ViewModels.UserViewModel>
+
+@using hrmApp.Web.ViewModels
+
+@{
+    Layout = "Layout/_LayoutTable";
+    ViewData["Title"] = "Felhasználó";
+    ViewData["CardHeaderName"] = ViewData["Title"] + " létrehozás";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+    ViewData["CreateButton"] = true;
+
+    async Task RolesTemplate(List<UserRoleViewModel> userRoles)
+    {
+        int i = 1;
+        foreach (var role in userRoles)
+        {
+            if (role.HasRole)
+            {
+                @if (i == 1)
+                {
+                    <span>@role.RoleName</span>
+                }
+                else
+                {
+                    <span>, @role.RoleName</span>
+                }
+
+    ;
+                i++;
+            }
+        }
+    };
+}
+
+<div class="card-body">
+    <table id="hrmTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                @* <th>@Html.DisplayNameFor(model => model.Email)</th> *@
+                <th>@Html.DisplayNameFor(model => model.SurName)</th>
+                <th>@Html.DisplayNameFor(model => model.ForeName)</th>
+                @* <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th> *@
+                @* <th>@Html.DisplayNameFor(model => model.Description)</th> *@
+                <th>@Html.DisplayNameFor(model => model.LockoutEnabled)</th>
+                <th>@Html.DisplayNameFor(model => model.EmailConfirmed)</th>
+                <th>Szerepkör</th>
+                <th>Műveletek</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                    @* <td>@Html.DisplayFor(modelItem => item.Email)</td> *@
+                    <td>@Html.DisplayFor(modelItem => item.SurName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ForeName)</td>
+                    @* <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td> *@
+                    @* <td>@Html.DisplayFor(modelItem => item.Description)</td> *@
+                    <td>@Html.DisplayFor(modelItem => item.LockoutEnabled)</td>
+                    <td>@Html.DisplayFor(modelItem => item.EmailConfirmed)</td>
+
+                    <td>@{
+                            await RolesTemplate(item.UserRoles);}</td>
+
+                    <td class="align-middle">
+                        <div class="row justify-content-center">
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@item.Id"
+                                data-toggle="tooltip" title="Szerkesztés">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.Id"
+                                data-toggle="tooltip" title="Részletek">
+                                    <i class="fas fa-file-alt"></i>
+                                </a>
+                                <a class="btn btn-sm btn-outline-secondary" asp-action="Delete" asp-route-id="@item.Id"
+                                data-toggle="tooltip" title="Törlés">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- /.table-responsive -->
+</div>
+<!-- /.card-body -->
+
+<!-- Init Tables -->
+@section InitTableScripts {
+<partial name="_InitDataTablesScript" />
+}

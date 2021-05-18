@@ -1,0 +1,87 @@
+@model hrmApp.Web.ViewModels.EmployeeViewModels.NewEmployeeViewModel
+
+@{
+    Layout = "Layout/_LayoutCard";
+    ViewData["Title"] = "Munkavállaló";
+    ViewData["CardTitleName"] = "Új " + ViewData["Title"] + " létrehozása";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+}
+
+<form asp-action="Create">
+    <input type="hidden" asp-for="CurrentProjectId" />
+    <input type="hidden" asp-for="UserId" />
+    <!-- Az összes szükséges attributum felsorolása hidden-két -->
+    <!-- .card-body -->
+    <div class="card-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="SSNumber" class="control-label"></label>
+            <input asp-for="SSNumber" class="form-control" />
+            <span asp-validation-for="SSNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Szervezet</label>
+            <select asp-for="@Model.SelectedOrganizationId" asp-items="@Model.Organizations" id="Organization" class="">
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Munkakör</label>
+            <select asp-for="@Model.SelectedJobId" asp-items="@Model.Jobs" id="Job" class="">
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Belépési folyamat státusza</label>
+            <select asp-for="@Model.SelectedProcessStatusId" asp-items="@Model.ProcessStatuses" id="ProcessStatus"
+                class="">
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="SurName" class="control-label"></label>
+                <input asp-for="SurName" class="form-control" />
+                <span asp-validation-for="SurName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="ForeName" class="control-label"></label>
+                <input asp-for="ForeName" class="form-control" />
+                <span asp-validation-for="ForeName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="Birthplace" class="control-label"></label>
+                <input asp-for="Birthplace" class="form-control" />
+                <span asp-validation-for="Birthplace" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <!-- /.card-body -->
+        <!-- card-footer -->
+        <div class="card-footer">
+            <div>
+                <div class="row justify-content-center">
+                    <div class="col-md-3 form-group">
+                        <input class="btn btn-primary btn-block" type="submit" value="Mentés" />
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-secondary btn-block" asp-action="Index">Vissza</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-footer -->
+</form>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="hu">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>hrmApp | @ViewData["Title"]</title>
+
+    @await Html.PartialAsync("_Styles.cshtml")
+</head>
+
+<body class="hold-transition login-page" style="min-height: 500px;">
+    <div class="col-md-3">
+        <div class="card card-red">
+            <div class="card-header">
+                <h2 class="card-title">@ViewData["CardTitleName"]</h2>
+            </div>
+            <!-- Here is loading CardContent -->
+            @RenderBody()
+        </div>
+    </div>
+</body>
+
+</html>

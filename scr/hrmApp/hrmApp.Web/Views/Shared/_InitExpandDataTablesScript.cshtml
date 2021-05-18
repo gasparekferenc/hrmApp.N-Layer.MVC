@@ -1,0 +1,19 @@
+﻿<script>
+    $(function () {
+        $.extend($.fn.dataTable.defaults, {
+            language: { url: '/lib/datatables/localization/hu.json' }
+        });
+
+        $('#hrmTable').DataTable({
+            dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rti<"row"<"col-sm-12 col-md-6 offset-md-3 d-flex justify-content-center"p><"col-sm-12 col-md-3 d-flex justify-content-end"B>>',
+            buttons: {
+                buttons: ['excel', 'pdf', 'print', 'colvis'],
+                dom: {
+                    button: {
+                        className: 'btn btn-light'
+                    }
+                }
+            }
+        });
+    });
+</script>

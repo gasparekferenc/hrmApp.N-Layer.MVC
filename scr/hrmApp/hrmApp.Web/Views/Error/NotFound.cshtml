@@ -1,0 +1,25 @@
+﻿@model string
+@{
+    Layout = "Layout/_LayoutBlankRed";
+    ViewData["Title"] = "Hiba";
+    ViewData["CardTitleName"] = "Hiba";
+}
+
+<!-- .card-body -->
+<div class="card-body">
+    <div>
+        <h4 class="text-secondary">
+            Hiba - A kért URL (@Model) nem található!
+        </h4>
+    </div>
+</div>
+<!-- /.card-body -->
+<!-- card-footer -->
+<div class="card-footer">
+    <div class="row justify-content-center">
+        <div class="form-group mb-1">
+            <a class="btn btn-secondary" onclick="window.history.back();">Vissza</a>
+        </div>
+    </div>
+</div>
+<!-- /.card-footer -->

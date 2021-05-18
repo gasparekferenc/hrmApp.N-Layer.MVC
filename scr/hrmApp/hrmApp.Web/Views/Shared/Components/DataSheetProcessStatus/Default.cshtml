@@ -1,0 +1,65 @@
+﻿@using hrmApp.Web.Constants
+@model hrmApp.Web.ViewModels.ComponentsViewModels.ProcessStatusViewModel
+
+@{
+    ViewData["CardTitleName"] = "Felvételi folyamat státusza";
+}
+
+<!-- .card -->
+<div class="card card-secondary">
+
+    <!-- .card-header -->
+    <div class="card-header">
+        <h2 class="card-title">@ViewData["CardTitleName"]</h2>
+    </div>
+    <!-- /.card-header -->
+
+    <form asp-action="ChangeProcessStatus">
+        <input type="hidden" asp-for="EmployeeId" />
+        <!-- Az összes szükséges attributum felsorolása hidden-két -->
+
+        <!-- .card-body -->
+        <div class="card-body">
+
+            @if (!String.IsNullOrEmpty(Model.Message))
+            {
+                if (Model.Message == BaseValues.ChangeProcessStatusSuccess)
+                {
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span><i class="icon fas fa-check"></i> Info - @Model.Message</span>
+                    </div>
+                }
+                if (Model.Message == BaseValues.ChangeProcessStatusFailed)
+                {
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span><i class="icon fas fa-ban"></i> Hiba - @Model.Message</span>
+                    </div>
+                }
+            }
+
+            <div class="form-group row">
+                <label class="col-4 control-label">Státusz</label>
+                <select asp-for="@Model.SelectedProcessStatusId" asp-items="@Model.ProcessStatuses" id="ProcessStatus"
+                    class="col-8 custom-select" onchange="this.form.submit()">
+                </select>
+            </div>
+        </div>
+        <!-- /.card-body -->
+
+        <!-- card-footer -->
+        <div class="card-footer">
+            <div>
+                <div class="row justify-content-center">
+                    <div class="col-md-3 form-group">
+                        @* <input class="btn btn-primary btn-block" type="submit" value="Mentés" /> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-footer -->
+
+    </form>
+</div>
+<!-- /.card -->

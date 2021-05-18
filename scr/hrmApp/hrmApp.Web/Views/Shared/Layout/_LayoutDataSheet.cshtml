@@ -1,0 +1,27 @@
+@{ Layout = "Layout/_Layout";}
+
+<!-- Content Header (Page header) -->
+<div class = "content-header">
+    <div class = "container-fluid">
+        <div class = "row mb-2">
+            <div class = "col-sm-6">
+                <h1 class = "m-0 text-dark">@ViewData["PageHeaderName"]</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Here is loading DataSheet contents -->
+        @RenderBody()
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content Main content -->
+
+@section Scripts {
+    @await RenderSectionAsync("InitDualListboxScripts", required: false)
+}

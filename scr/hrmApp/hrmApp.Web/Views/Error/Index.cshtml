@@ -1,0 +1,25 @@
+﻿@model Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature
+@{
+    Layout = "Layout/_LayoutBlankRed";
+    ViewData["Title"] = "Hiba";
+    ViewData["CardTitleName"] = "Hiba";
+}
+
+<!-- .card-body -->
+<div class="card-body">
+    <div class="row">
+        <div class="text-secondary">
+            <h4>Hiba: @Model.Error.Message</h4>
+        </div>
+    </div>
+</div>
+<!-- /.card-body -->
+<!-- card-footer -->
+<div class="card-footer">
+    <div class="row justify-content-center">
+        <div class="form-group mb-1">
+            <a class="btn btn-secondary" onclick="window.history.back();">Vissza</a>
+        </div>
+    </div>
+</div>
+<!-- /.card-footer -->

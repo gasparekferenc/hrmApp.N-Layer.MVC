@@ -1,0 +1,57 @@
+@model hrmApp.Web.DTO.DocTypeDTO
+
+@{
+    Layout = "Layout/_LayoutCard";
+    ViewData["Title"] = "Dokumentum típus";
+    ViewData["CardTitleName"] = "Új " + ViewData["Title"] + " létrehozása";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+}
+
+<form asp-action="Create">
+    <!-- .card-body -->
+    <div class="card-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="TypeName" class="control-label"></label>
+            <input asp-for="TypeName" class="form-control" />
+            <span asp-validation-for="TypeName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <textarea asp-for="Description" class="form-control" placeholder="Leírás"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="MandatoryElement" />
+                @Html.DisplayNameFor(model => model.MandatoryElement)
+            </label>
+        </div>
+        <div class="form-group">
+            <label asp-for="PreferOrder" class="control-label"></label>
+            <input asp-for="PreferOrder" class="form-control" value="101" />
+            <span asp-validation-for="PreferOrder" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="IsActive" checked />
+                @Html.DisplayNameFor(model => model.IsActive)
+            </label>
+        </div>
+    </div>
+    <!-- /.card-body -->
+    <!-- card-footer -->
+    <div class="card-footer">
+        <div>
+            <div class="row justify-content-center">
+                <div class="col-md-3 form-group">
+                    <input class="btn btn-primary btn-block" type="submit" value="Mentés" />
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-secondary btn-block" asp-action="Index">Vissza</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.card-footer -->
+</form>

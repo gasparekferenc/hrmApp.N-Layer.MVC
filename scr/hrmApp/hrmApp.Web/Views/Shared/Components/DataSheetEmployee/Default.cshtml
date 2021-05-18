@@ -1,0 +1,163 @@
+﻿@using hrmApp.Web.Constants
+@model hrmApp.Web.ViewModels.ComponentsViewModels.DataSheetEmployeeViewModel
+
+@{
+    ViewData["CardTitleName"] = "Munkavállaló adatai";
+}
+
+<!-- .card -->
+<div class="card card-secondary">
+
+    <!-- .card-header -->
+    <div class="card-header">
+        <h2 class="card-title">@ViewData["CardTitleName"]</h2>
+    </div>
+    <!-- /.card-header -->
+
+    <form asp-action="ChangeEmployeeData" method="post" name="ChangeEmployeeData" id="ChangeEmployeeData">
+        <input type="hidden" asp-for="CurrentProjectId" />
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="EmployeeId" />
+
+        <!-- Az összes szükséges attributum felsorolása hidden-két -->
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <!-- .card-body -->
+        <div class="card-body overflow-auto" style="min-height: 200px; max-height: 646px;">
+            @* Model error handle *@
+            @if (!String.IsNullOrEmpty(Model.Message))
+            {
+                if (Model.Message == BaseValues.ChangeEmployeeDataSuccess)
+                {
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span><i class="icon fas fa-check"></i> Info - @Model.Message</span>
+                    </div>
+                }
+                if (Model.Message == BaseValues.ChangeEmployeeDataFailed)
+                {
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span><i class="icon fas fa-ban"></i> Hiba - @Model.Message</span>
+                    </div>
+                }
+            }
+
+            <div class="form-group row">
+                <label asp-for="Employee.SSNumber" class="col-4 control-label"></label>
+                <input asp-for="Employee.SSNumber" class="col-8 form-control" readonly />
+                <span asp-validation-for="Employee.SSNumber" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="@Model.Employee.SurName" class="control-label"></label>
+                    <input asp-for="@Model.Employee.SurName" class="form-control" />
+                    <span asp-validation-for="@Model.Employee.SurName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="@Model.Employee.ForeName" class="control-label"></label>
+                    <input asp-for="@Model.Employee.ForeName" class="form-control" />
+                    <span asp-validation-for="@Model.Employee.ForeName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="@Model.Employee.Birthplace" class="control-label"></label>
+                    <input asp-for="@Model.Employee.Birthplace" class="form-control" />
+                    <span asp-validation-for="@Model.Employee.Birthplace" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="@Model.Employee.DateOfBirth" class="control-label"></label>
+                    <input asp-for="@Model.Employee.DateOfBirth" class="form-control" />
+                    <span asp-validation-for="@Model.Employee.DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@Model.Employee.MothersName" class="col-4 control-label"></label>
+                <input asp-for="@Model.Employee.MothersName" class="col-8 form-control" />
+                <span asp-validation-for="@Model.Employee.MothersName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@Model.Employee.PhoneNumber" class="col-4 control-label"></label>
+                <input asp-for="@Model.Employee.PhoneNumber" class="col-8 form-control" />
+                <span asp-validation-for="@Model.Employee.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@Model.Employee.Email" class="col-4 control-label"></label>
+                <input asp-for="@Model.Employee.Email" class="col-8 form-control" />
+                <span asp-validation-for="@Model.Employee.Email" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group row">
+                <label asp-for="Employee.Job.JobName" class="col-4 control-label"></label>
+                <select asp-for="SelectedJobId" asp-items="@Model.Jobs" id="Jobs" class="col-8 custom-select">
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="@Model.Employee.StartDate" class="control-label"></label>
+                    <input asp-for="@Model.Employee.StartDate" class="form-control" />
+                    <span asp-validation-for="@Model.Employee.StartDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="@Model.Employee.EndDate" class="control-label"></label>
+                    <input asp-for="@Model.Employee.EndDate" class="form-control" />
+                    <span asp-validation-for="@Model.Employee.EndDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <div class="icheck-default">
+                    <input asp-for="Employee.TravelAllowance" class="form-control" />
+                    <label asp-for="Employee.TravelAllowance" class="control-label"></label>
+                    <span asp-validation-for="@Model.Employee.TravelAllowance" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@Model.Employee.Description" class="col-4 control-label"></label>
+                <textarea asp-for="@Model.Employee.Description" class="col-8 form-control" rows="3"
+                    placeholder="Megjegyzés..."></textarea>
+                <span asp-validation-for="@Model.Employee.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="@Model.Employee.PhoneNumber" class="col-4 control-label"></label>
+                <input asp-for="@Model.Employee.PhoneNumber" class="col-8 form-control" />
+                <span asp-validation-for="@Model.Employee.PhoneNumber" class="text-danger"></span>
+            </div>
+
+        </div>
+        <!-- /.card-body -->
+
+        <!-- card-footer -->
+        <div class="card-footer">
+            <div>
+                <div class="row justify-content-center">
+                    <div class="col-md-3 form-group">
+                        <input class="btn btn-primary btn-block" type="submit" value="Mentés" />
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-secondary btn-block" asp-action="Index">Vissza</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-footer -->
+
+    </form>
+</div>
+<!-- /.card -->
+
+
+<!-- Check...: a script a DataSheet.cshtml-ben töltődik be-->

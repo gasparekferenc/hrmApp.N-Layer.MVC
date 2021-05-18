@@ -1,0 +1,40 @@
+@{ Layout = "Layout/_Layout";}
+
+<!-- Content Header (Page header) -->
+<div class = "content-header">
+    <div class = "container-fluid">
+        <div class = "row mb-2">
+            <div class = "col-sm-6">
+                <h1 class = "m-0 text-dark">@ViewData["PageHeaderName"]</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-6">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h2 class="card-title">@ViewData["CardTitleName"]</h2>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- Here is loading CardContent -->
+                    @RenderBody()
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col-md-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content Main content -->
+
+@section Scripts {
+    @await RenderSectionAsync("InitDualListboxScripts", required: false)
+}

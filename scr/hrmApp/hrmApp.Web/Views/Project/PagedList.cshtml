@@ -1,0 +1,81 @@
+﻿@model hrmApp.Web.DTO.IPagedListDTO<hrmApp.Web.DTO.ProjectDTO>
+
+@{
+    ViewData["Title"] = "PagedList - Index"; }
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Projekt létrehozása</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].NumberOfEmployee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].IsActive)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfEmployee)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Szerkeszt</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Részletek</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Töröl</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="PagedList" asp-route-pageIndex="@(Model.PageIndex - 1)" asp-route-pageSize="@(Model.PageSize )"
+    class="btn btn-default @prevDisabled">
+    Előző
+</a>
+<a asp-action="PagedList" asp-route-pageIndex="@(Model.PageIndex + 1)" asp-route-pageSize="@(Model.PageSize )"
+    class="btn btn-default @nextDisabled">
+    Következő
+</a>

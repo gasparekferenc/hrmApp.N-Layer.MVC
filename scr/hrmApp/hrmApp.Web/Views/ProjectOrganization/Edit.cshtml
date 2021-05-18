@@ -1,0 +1,67 @@
+@model hrmApp.Web.ViewModels.POViewModel
+
+@{
+    Layout = "Layout/_LayoutCard";
+    ViewData["Title"] = "Szervezet";
+    ViewData["CardTitleName"] = ViewData["Title"] + " Projekthez rendelése";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+}
+
+<form asp-action="Edit">
+    <blockquote class="bg-light">
+        <p>Projekt - <span class="text-primary">@Model.ProjectName</span></p>
+    </blockquote>
+    <!-- .card-body -->
+    <div class="card-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Is there relation entity? -->
+        @if (Model.RelatedOrganizationIds.Any())
+        {
+            <div class="card card-light collapsed-card">
+                <div class="card-header">
+                    <h3 class="card-title">Nem módosítható Szervezetek</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @foreach (var OrganizationName in Model.RelatedOrganizationNames)
+                    {
+                        <h6>@OrganizationName</h6>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <select asp-for="@Model.AssignOrganizationIds" asp-items="@Model.Organizations" id="hrmDualListbox"
+                multiple="multiple" class="duallistbox">
+            </select>
+        </div>
+    </div>
+    <!-- /.card-body -->
+    <!-- card-footer -->
+    <div class="card-footer">
+        <div>
+            <div class="row justify-content-center">
+                <div class="col-md-3 form-group">
+                    <input class="btn btn-primary btn-block" type="submit" value="Mentés" />
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-secondary btn-block" asp-action="Index">Vissza</a>
+                    @* <a class="btn btn-secondary btn-block" onclick="window.history.back();">Vissza</a> *@
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.card-footer -->
+</form>
+
+
+<!-- Init Bootstrap Duallistbox -->
+@section InitDualListboxScripts {
+<partial name="_InitDualListboxScripts" />
+}

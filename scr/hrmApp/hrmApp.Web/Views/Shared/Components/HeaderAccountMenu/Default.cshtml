@@ -1,0 +1,50 @@
+﻿@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+
+<!-- UserSignIn Dropdown Menu -->
+
+@if (signInManager.IsSignedIn(User))
+{
+    <li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="fas fa-user"></i>
+        <span class="">@userManager.GetUserName(User)</span>
+    </a>
+
+    <!-- UserProfil Header Text -->
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-header bg-light">Felhasználói profil</span>
+        <div class="dropdown-divider"></div>
+
+        <!-- UserProfil -->
+        <a href="/Manage/ChangeProfilData" class="dropdown-item">
+            <i class="fas fa-address-card mr-2"></i> Profil adatok
+            @* <span class="float-right text-muted text-sm">3 mins</span> *@
+        </a>
+        <div class="dropdown-divider"></div>
+
+        <!-- ChangePassword -->
+        <a href="/Manage/ChangePassword" class="dropdown-item">
+            <i class="fas fa-key mr-2"></i> Jelszó csere
+            @* <span class="float-right text-muted text-sm">12 hours</span> *@
+        </a>
+        <div class="dropdown-divider"></div>
+        <!-- Logout -->
+
+        <form asp-controller="Account" asp-action="Logout" method="post">
+            <button type="submit" class="dropdown-item">
+                <i class="fas fa-sign-out-alt mr-2"></i> Kijelentkezés
+                @* <span class="float-right text-muted text-sm">2 days</span> *@
+            </button>
+        </form>
+
+    </div>
+</li>
+}
+else
+{
+    <a class="nav-link" href="/Account/Login">
+    <i class="fas fa-user"></i>
+    Bejelentkezés
+</a>
+}

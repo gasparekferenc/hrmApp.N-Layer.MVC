@@ -1,0 +1,132 @@
+﻿@model hrmApp.Web.ViewModels.AccountViewModels.ConfirmEmailViewModel
+
+@{
+    Layout = "Layout/_LayoutBlank";
+    ViewData["Title"] = "Hozzáférés megerősítése";
+    ViewData["CardTitleName"] = ViewData["Title"];
+    ViewData["PageHeaderName"] = ViewData["Title"];
+}
+
+<form asp-action="ConfirmEmail">
+    <input asp-for="Code" type="hidden" />
+    <input asp-for="Email" type="hidden" />
+    <input asp-for="UserId" type="hidden" />
+
+    <blockquote class="bg-light">
+        <p>@Html.DisplayNameFor(model => model.Email) -
+            <span class="text-primary">@Html.DisplayFor(model => model.Email)</span>
+        </p>
+    </blockquote>
+
+    <!-- .card-body -->
+    <div class="card-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @* <div asp-validation-summary="All" class="text-danger"></div> *@
+        <div class="bg-light" style="padding: 10px;">
+            Kérjük állítsa be a jelszavát.
+            <br />
+            A GDPR irányelvek és a Felhasználási feltételek
+            elfogadása kötelező!
+            <br />
+            Az adatok mentését követően átirányítjuk a bejelentkezés
+            oldalra.
+        </div>
+        <hr>
+
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <div class="input-group">
+                <input asp-for="Password" class="form-control" placeholder="Jelszó" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ConfirmPassword"></label>
+            <div class="input-group">
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Jelszó megerősítése" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <!-- GDPR directives -->
+        <div class="card collapsed-card">
+            <div class="card-header card-light">
+                <div class="card-title">
+                    <div class="form-group form-check icheck-default">
+                        <input class="form-check-input" asp-for="GDPRConfirmed" />
+                        <label class="form-check-label" asp-for="GDPRConfirmed">
+                            @Html.DisplayNameFor(model => model.GDPRConfirmed)
+                        </label>
+                        <div><span asp-validation-for="GDPRConfirmed" class="text-danger"></span></div>
+                    </div>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Load GDPR document -->
+                <div style="height: 250px; overflow-y: scroll;">
+                    @await Html.PartialAsync("/wwwroot/html/_GDPRDocument.cshtml")
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Term of use directives -->
+        <div class="card collapsed-card">
+            <div class="card-header card-light">
+                <div class="card-title">
+                    <div class="form-group form-check icheck-default">
+                        <input class="form-check-input" asp-for="TermOfUseConfirmed" />
+                        <label class="form-check-label" asp-for="TermOfUseConfirmed">
+                            @Html.DisplayNameFor(model => model.TermOfUseConfirmed)
+                        </label>
+                        <div><span asp-validation-for="TermOfUseConfirmed" class="text-danger"></span></div>
+                    </div>
+                </div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-xs btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Load Term of use document -->
+                <div style="height: 250px; overflow-y: scroll;">
+                    @await Html.PartialAsync("/wwwroot/html/_TermsOfUseDocument.cshtml")
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /.card-body -->
+    <!-- card-footer -->
+    <div class="card-footer">
+        <div>
+            <div class="row justify-content-center">
+                <div class="col-md-3 form-group">
+                    <input class="btn btn-primary btn-block" type="submit" value="Mentés" />
+                </div>
+                @* <div class="col-md-3">
+                    <a class="btn btn-secondary btn-block" asp-action="Index">Vissza</a>
+                    </div> *@
+            </div>
+        </div>
+    </div>
+    <!-- /.card-footer -->
+</form>

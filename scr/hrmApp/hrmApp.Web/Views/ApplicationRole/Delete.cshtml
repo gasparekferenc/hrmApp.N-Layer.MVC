@@ -1,0 +1,63 @@
+﻿@model hrmApp.Web.ViewModels.RoleViewModel
+
+@{
+    Layout = "Layout/_LayoutCard";
+    ViewData["Title"] = "Szerepkör";
+    ViewData["CardTitleName"] = ViewData["Title"] + " adatai";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+}
+
+<!-- .card-body -->
+<div class="card-body">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th style="width:50%"> @Html.DisplayNameFor(model => model.RoleName) </th>
+                <td>@Html.DisplayFor(model => model.RoleName)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- /.card-body -->
+<!-- card-footer -->
+<div class="card-footer">
+    <div>
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <a class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalDelete">Törlés</a>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-secondary btn-block" asp-action="Index">Vissza</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.card-footer -->
+
+<!-- Modal -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title" id="modalDeleteTitle">@ViewData["Title"] törlés megerősítése</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Biztosan törlölni szeretnéd a @ViewData["Title"]t?
+            </div>
+            <div class="modal-footer">
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="RoleName" />
+                    <input type="submit" class="btn btn-danger" value="Törlés" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Mégsem</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->

@@ -1,0 +1,19 @@
+﻿@using hrmApp.Web.Views.Shared.Components.SidebarBrand
+@using hrmApp.Web.Views.Shared.Components.SidebarUserPanel
+@using hrmApp.Web.Views.Shared.Components.SidebarSearch
+@using hrmApp.Web.Views.Shared.Components.SidebarMenu
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    @(await Component.InvokeAsync<SidebarBrandViewComponent>())
+    <!-- Sidebar -->
+    <div class="sidebar">
+        @*Sidebar user panel (optional)
+            @(await Component.InvokeAsync<SidebarUserPanelViewComponent>())
+            SidebarSearch Form
+            @(await Component.InvokeAsync<SidebarSearchViewComponent>())*@
+        <!-- Sidebar Menu -->
+        @(await Component.InvokeAsync<SidebarMenuViewComponent>())
+    </div>
+</aside>
+<!-- /Main Sidebar Container -->

@@ -1,0 +1,67 @@
+@model IEnumerable<ProjectDTO>
+@{
+    Layout = "Layout/_LayoutTable";
+    ViewData["Title"] = "Szervezet Projekthez rendelése";
+    ViewData["CardHeaderName"] = ViewData["Title"] + "";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+    ViewData["CreateButton"] = false;
+
+    async Task ButtonTemplate(int itemId)
+    {
+        <div class="row justify-content-center">
+            <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@itemId" data-toggle="tooltip"
+                    title="Szerkesztés">
+                    <i class="fas fa-pencil-alt"></i>
+                </a>
+            </div>
+        </div>
+    };
+}
+
+@* TODO Ezt lehetne expandable-é alakítani *@
+<div class="card-body">
+    <table id="hrmTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.ProjectName)</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectOrganizations.FirstOrDefault().Organization.OrganizationName)
+                </th>
+                <th>Műveletek</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var count = item.ProjectOrganizations.Count();
+                if (count > 0)
+                {
+                    foreach (var org in item.ProjectOrganizations)
+                    {
+                        <tr>
+                            <td>@item.ProjectName</td>
+                            <td>@org.Organization.OrganizationName</td> 
+                            <td class="align-right">@{await ButtonTemplate(item.Id);}</td>                    
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>@item.ProjectName</td>
+                        <td>Nincs Szervezet hozzárendelve.</td>
+                        <td class="align-middle">@{await ButtonTemplate(item.Id);}</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <!-- /.table-responsive -->
+</div>
+<!-- /.card-body -->
+
+<!-- Init Tables -->
+@section InitTableScripts {
+    <partial name="_InitExpandDataTablesScript" />
+}

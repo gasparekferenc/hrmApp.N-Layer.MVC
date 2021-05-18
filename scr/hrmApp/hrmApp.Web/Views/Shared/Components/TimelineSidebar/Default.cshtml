@@ -1,0 +1,106 @@
+﻿@using hrmApp.Core.Constants
+@model IEnumerable<hrmApp.Web.ViewModels.ComponentsViewModels.TimeLineViewModel>
+
+<!-- Timeline Sidebar -->
+<aside class="control-sidebar control-sidebar-dark" style="width: 500px; overflow-y: scroll;">
+    <!-- Timeline sidebar content -->
+    <div class="p-3">
+        <h5>Idővonal</h5>
+        <!-- Timelime -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- The time line -->
+                <div class="timeline">
+
+                    @foreach (var dateOfEntries in Model)
+                    {
+                        <!-- timeline time label -->
+                        <div class="time-label">
+                            <span class="bg-gray">@dateOfEntries.Date </span>
+                        </div>
+                        <!-- /.timeline-label -->
+
+                        @foreach (var item in dateOfEntries.Entries)
+                        {
+                            var time = item.EntryDate.ToString("HH.mm");
+                            var entryHeader = item.IsReminder ? $"{EntryTypes.Names[item.EntryType]} ({item.EntryDate.ToString("yyyy.MM.dd")})" : EntryTypes.Names[item.EntryType];
+                            
+                            var entryType = EntryTypes.Names[item.EntryType];
+                            var icon = GetIconClass(entryType);
+
+                            <!-- timeline item -->
+                            <div>
+                                <i class="@icon"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fas fa-clock"></i> @time</span>
+                                    <h3 class="timeline-header">
+                                        @entryHeader
+                                    </h3>
+                                    <div class="timeline-body">
+                                        @item.Entry
+                                    </div>
+                                    <div class="timeline-footer">
+                                        @* <a class="btn btn-primary btn-sm">Read more</a> *@
+                                        @* <a class="btn btn-danger btn-sm">Delete</a> *@
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END timeline item -->
+                        }
+                    }
+                    <div>
+                        <i class="fas fa-clock bg-gray"></i>
+                    </div>
+                </div>
+                <!-- The time line -->
+            </div>
+        </div>
+        <!-- Timelime -->       
+</aside>
+
+@{
+    string GetIconClass(string entryType)
+    {
+        string iconClass = "";
+        switch (entryType)
+        {
+            case EntryTypes.Create:
+                iconClass = "fas fa-user-plus bg-green";
+                break;
+            case EntryTypes.Update:
+                iconClass = "fas fa-user-edit bg-orange";
+                break;
+            case EntryTypes.Delete:
+                iconClass = "fas fa-user-times bg-red";
+                break;
+            case EntryTypes.ReEnrollment:
+                iconClass = "fas fa-user-cog bg-blue";
+                break;
+            case EntryTypes.StatusChange:
+                iconClass = "fas fa-user-tag bg-blue";
+                break;
+            case EntryTypes.OrganizationChange:
+                iconClass = "fas fa-landmark bg-blue";
+                break;
+            case EntryTypes.UploadDocument:
+                iconClass = "fas fa-file-upload bg-green";
+                break;
+            case EntryTypes.DownloadDocument:
+                iconClass = "fas fa-file-download bg-orange";
+                break;
+            case EntryTypes.DeleteDocument:
+                iconClass = "fas fa-file-excel bg-red";
+                break;
+            case EntryTypes.Memo:
+                iconClass = "fas fa-address-card bg-yellow";
+                break;
+            case EntryTypes.MemoWithReminder:
+                iconClass = "fas fa-address-card bg-red";
+                break;
+            default:
+                ;
+                break;
+        }
+        return iconClass;
+    };
+}

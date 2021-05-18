@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Http
+@using hrmApp.Web.Constants
+@using hrmApp.Web.Views.Shared.Components.Header
+@using hrmApp.Web.Views.Shared.Components.Sidebar
+@using hrmApp.Web.Views.Shared.Components.TimelineSidebar
+@using hrmApp.Web.Views.Shared.Components.Footer
+
+<!DOCTYPE html>
+
+<html lang="hu">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>hrmApp | @ViewData["Title"]</title>
+
+    @*<link rel="icon" type="image/png" href="~/lib/admin-lte/dist/img/AdminLTELogo.png" />*@
+
+    @await Html.PartialAsync("_Styles.cshtml")
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+@*<body class="hold-transition sidebar-mini">*@
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <div class="wrapper">
+        @(await Component.InvokeAsync<HeaderViewComponent>())
+        @(await Component.InvokeAsync<SidebarViewComponent>())
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        @if (Context.Request.Path.ToUriComponent().Contains("DataSheet"))
+        {
+            int employeeId = Context.Session.GetInt32(SessionKeys.EmployeeIdSessionKey) ?? 0;
+            if (employeeId != 0)
+            {
+                @(await Component.InvokeAsync<TimelineSidebarViewComponent>(employeeId))
+            }
+        }
+        @(await Component.InvokeAsync<FooterViewComponent>())
+    </div>
+    @await Html.PartialAsync("_Scripts.cshtml")
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

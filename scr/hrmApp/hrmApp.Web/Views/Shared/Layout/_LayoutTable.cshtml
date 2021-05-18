@@ -1,0 +1,52 @@
+@{ Layout = "Layout/_Layout";}
+
+@section Styles {
+    <partial name="_DataTablesStyles" />
+}
+
+@{
+    var createButton = (bool)@ViewData["CreateButton"];
+    if (createButton)
+    {
+        <div class="card-header">
+            <a asp-action="Create" class = "btn btn-primary">@ViewData["CardHeaderName"]</a>
+        </div>
+    }
+}
+
+<!-- Content Header (Page header) -->
+<div class = "content-header">
+    <div class = "container-fluid">
+        <div class = "row mb-2">
+            <div class = "col-sm-6">
+                <h1 class = "m-0 text-dark">@ViewData["PageHeaderName"]</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class = "row">
+            <div class = "col-12">
+                <div class = "card">
+                    <!-- Here is loading Index.cshtml -->
+                    @RenderBody()
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col-md-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content Main content -->
+<!-- DataTables  Init -->
+
+@section Scripts {
+    <partial name="_DataTablesScripts" />         
+    @await RenderSectionAsync("InitTableScripts", required: false)
+}

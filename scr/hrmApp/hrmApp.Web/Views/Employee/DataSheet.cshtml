@@ -1,0 +1,72 @@
+@using hrmApp.Web.Views.Shared.Components.DataSheetDocuments
+@using hrmApp.Web.Views.Shared.Components.DataSheetEmployee
+@using hrmApp.Web.Views.Shared.Components.DataSheetOrganization
+@using hrmApp.Web.Views.Shared.Components.DataSheetProcessStatus
+
+@model hrmApp.Web.ViewModels.EmployeeViewModels.DataSheetViewModel
+
+@{
+    Layout = "Layout/_LayoutDataSheet";
+    ViewData["Title"] = "Adatlap";
+    ViewData["CardTitleName"] = "" + ViewData["Title"] + "";
+    ViewData["PageHeaderName"] = ViewData["Title"] + "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-sm-12">
+        <!-- .Employee -->
+        @(await Component.InvokeAsync<DataSheetEmployeeViewComponent>(@Model.Employee.Id))
+        <!-- /.Employee -->
+    </div>
+
+    <!-- ProcessStatus  Memo -->
+    <!--     Documents       -->
+    <div class="col-md-6 col-sm-12">
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-12">
+                <!-- DataSheetProcessStatusViewComponent -->
+                <div class="">
+                    @(await Component.InvokeAsync<DataSheetProcessStatusViewComponent>(@Model.Employee.Id))
+                </div>
+                <!-- DataSheetOrganizationViewComponent -->
+                <div class="">
+                    @(await Component.InvokeAsync<DataSheetOrganizationViewComponent>(@Model.Employee.Id))
+                </div>
+            </div>
+
+            <!-- DataSheetMemoViewComponent -->
+            <div class="col-md-6 col-sm-12">
+                @(await Component.InvokeAsync<DataSheetMemosViewComponent>(@Model.Employee.Id))
+            </div>
+        </div>
+
+        <!-- .Documents -->
+        <!-- DataSheetDocumentsViewComponent -->
+        @(await Component.InvokeAsync<DataSheetDocumentsViewComponent>(@Model.Employee.Id))
+        <!-- /Documents -->
+    </div>
+</div>
+<!-- /.row -->
+
+<script>
+    @* DataSheetDocumentsViewComponent-hez szükséges *@
+        document.getElementById("DocTypes").addEventListener("change", EnablesUploadFile);
+    function EnablesUploadFile() {
+        var valueDocType = document.getElementById("DocTypes").value;
+        var btnUpload = document.getElementById("btnUploadFile");
+        if (valueDocType == "-1") { btnUpload.disabled = true; }
+        else { btnUpload.disabled = false; }
+    }
+
+    @* DataSheetMemoViewComponent-hez szükséges *@
+        document.getElementById("IsReminder").addEventListener("change", EnablesDeadlineDate);
+    function EnablesDeadlineDate() {
+        var IsChecked = document.getElementById("IsReminder").checked;
+        console.log(IsChecked);
+        var dpDeadlineDate = document.getElementById("DeadlineDate");
+        if (IsChecked) { dpDeadlineDate.disabled = false; }
+        else { dpDeadlineDate.disabled = true; }
+    }
+
+</script>

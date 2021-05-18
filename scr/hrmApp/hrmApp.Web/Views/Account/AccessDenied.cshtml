@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Hozzáférés megtagadva";
+    ViewData["CardTitleName"] = "Hozzáférés megtagadva";
+}
+
+<section class="content login-page">
+    <div class="container-fluid">
+        <div class="row justify-content-center" style="min-height: 500px;">
+            <div class="col-md-4 col-sm-12">
+
+
+                <div class="">
+                    <div class="card card-red">
+                        <div class="card-header">
+                            <h2 class="card-title">@ViewData["CardTitleName"]</h2>
+                        </div>
+                        <!-- Here is loading CardContent -->
+                        <!-- .card-body -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="text-secondary">
+                                    <h5 class="text-danger">Nincs hozzáférési jogosultságod ennek a tartalomnak az
+                                        eléréséhez!"</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <!-- card-footer -->
+                        <div class="card-footer">
+                            <div class="row justify-content-center">
+                                <div class="form-group mb-1">
+                                    <a class="btn btn-secondary" onclick="window.history.back();">Vissza</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-footer -->
+
+
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.col-md-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content Main content -->

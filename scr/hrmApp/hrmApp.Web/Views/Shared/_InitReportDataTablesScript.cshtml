@@ -1,0 +1,75 @@
+﻿<script>
+  $(document).ready(function () {
+        $.extend($.fn.dataTable.defaults, {
+            language: { url: '/lib/datatables/localization/hu.json' },            
+        });
+
+        var table = $('#hrmTable').DataTable({
+            searchPanes: {
+                viewTotal: true
+            },
+            dom: "<'row'<'col-sm-12 col-md-3'l><'#FilterBtn.col-sm-12 col-md-3'><'col-sm-12 col-md-6'f>>rti<'row'<'col-sm-12 col-md-6 offset-md-2 d-flex justify-content-center'p><'col-sm-12 col-md-4 d-flex justify-content-end'B>>",
+            buttons: {
+                buttons: [
+                'excel', 'pdf', 'print',
+                {
+                    extend: 'colvis',
+                    postfixButtons: [ 'colvisRestore' ],
+                    columns: '0,1,2,3,4,5'
+                }
+                ],
+                dom: {
+                    button: {
+                        className: 'btn btn-light'
+                    }
+                }
+            },
+            orderCellsTop: true,
+            fixedHeader: true
+        }); 
+
+
+     new $.fn.dataTable.Buttons( table, {
+        buttons: [
+            {
+                extend: 'searchBuilder',
+                text: 'Összetett szűrés',
+                className: 'btn-light',
+                config: {
+                    depthLimit: 2
+                }
+            },
+            {
+                extend: 'searchPanes',
+                className: 'btn-light',
+                text: 'Összetett szűrés 2',
+            }            
+        ]
+        });
+  
+        table.buttons().container()
+        .appendTo('#FilterBtn');  // #FilterBtn
+
+
+        // Setup - add a text input to each footer cell
+        $('#hrmTable thead tr').clone(true).appendTo('#hrmTable thead');
+        $('#hrmTable thead tr:eq(1) th').each(function (i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Szűrés ' + title + '" />');
+
+            $('input', this).on('keyup change', function () {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+
+
+    });
+
+
+
+</script>

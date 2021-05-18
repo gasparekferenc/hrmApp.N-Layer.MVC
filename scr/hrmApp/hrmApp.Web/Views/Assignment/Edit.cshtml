@@ -1,0 +1,48 @@
+@model hrmApp.Web.ViewModels.AssignViewModel
+
+@{
+    Layout = "Layout/_LayoutCard";
+    ViewData["Title"] = "Szervezet";
+    ViewData["CardTitleName"] = ViewData["Title"] + " felhasználóhoz rendelése";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+}
+
+<form asp-action="Edit">
+    @* <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="RowVersion" /> *@
+    <!-- .card-body -->
+    <blockquote class="bg-light">
+        <p>Felhasználó <span class="text-primary">@Model.UserName</span></p>
+    </blockquote>
+    <div class="card-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <select asp-for="@Model.AssignOrganizationIds" asp-items="@Model.Organizations" id="hrmDualListbox"
+                multiple="multiple" class="duallistbox">
+            </select>
+        </div>
+    </div>
+    <!-- /.card-body -->
+
+    <!-- card-footer -->
+    <div class="card-footer">
+        <div>
+            <div class="row justify-content-center">
+                <div class="col-md-3 form-group">
+                    <input class="btn btn-primary btn-block" type="submit" value="Mentés" />
+                </div>
+                <div class="col-md-3">
+                    @*<a class="btn btn-secondary btn-block" asp-action="Index">Vissza</a>*@
+                    <a class="btn btn-secondary btn-block" onclick="window.history.back();">Vissza</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.card-footer -->
+</form>
+
+
+<!-- Init Bootstrap Duallistbox -->
+@section InitDualListboxScripts {
+<partial name="_InitDualListboxScripts" />
+}

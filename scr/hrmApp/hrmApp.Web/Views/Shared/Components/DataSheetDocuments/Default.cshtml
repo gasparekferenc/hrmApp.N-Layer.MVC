@@ -1,0 +1,171 @@
+﻿@using hrmApp.Web.Constants
+@model hrmApp.Web.ViewModels.ComponentsViewModels.DocumentsViewModel
+
+@{
+    ViewData["CardTitleName"] = "Csatolt dokumentumok";
+}
+
+<!-- .card -->
+<div class="card card-secondary">
+
+    <!-- .card-header -->
+    <div class="card-header">
+        <h2 class="card-title">@ViewData["CardTitleName"]</h2>
+    </div>
+    <!-- /.card-header -->
+
+    <form asp-action="UpLoadFile" enctype="multipart/form-data" method="post" name="UploadFile" id="UploadFile">
+        <input type="hidden" asp-for="EmployeeId" />
+
+        <!-- Az összes szükséges attributum felsorolása hidden-két -->
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <!-- .card-body -->
+        <div class="card-body" style="max-height: 650px;">
+            @if (!String.IsNullOrEmpty(Model.Message))
+            {
+                if (Model.Message == BaseValues.FileUploadSuccess
+                || Model.Message == BaseValues.FileDeleteSuccess)
+                {
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span><i class="icon fas fa-check"></i> Info - @Model.Message</span>
+                    </div>
+                }
+                if (Model.Message == BaseValues.FileUploadFailed
+                || Model.Message == BaseValues.FileDeleteFailed
+                )
+                {
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span><i class="icon fas fa-ban"></i> Hiba - @Model.Message</span>
+                    </div>
+                }
+            }
+            <div class="form-group">
+                <label for="AttachedFile">File csatolása</label>
+                <div class="input-group">
+                    <div class="custom-file form-group">
+                        <input asp-for="AttachedFile" type="file" class="form-control custom-file-input"
+                            id="AttachedFile">
+                        <label asp-for="AttachedFile" class="control-label custom-file-label" for="AttachedFile">File
+                            kiválasztása</label>
+                    </div>
+                    <div class="input-group-append form-group">
+                        <button type="submit" class="btn btn-primary input-group-text form-control" id="btnUploadFile"
+                            disabled>Feltöltés</button>
+                    </div>
+                </div>
+                <span asp-validation-for="AttachedFile" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="control-label">Dokumentum típus</label>
+                    <select asp-for="@Model.SelectedDocTypeId" asp-items="@Model.DocTypes" id="DocTypes"
+                        class="custom-select">
+                        <option value="-1">Típus választás...</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control" placeholder="(opcionális)"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <!-- Feltöltött dokumentumok listája -->
+            @if (Model.Documents.Any())
+            {
+                <div class="card-body table-responsive p-0" style="max-height: 250px;">
+                    <table id="hrmTable" class="table table-head-fixed table-bordered table-striped text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Documents.FirstOrDefault().DocDisplayName)</th>
+                                <th>@Html.DisplayNameFor(model => model.Documents.FirstOrDefault().DocType.TypeName)</th>
+                                <th>@Html.DisplayNameFor(model => model.Documents.FirstOrDefault().Description)</th>
+                                <th>Műveletek</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var document in Model.Documents)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => document.DocDisplayName)</td>
+                                    <td>@Html.DisplayFor(modelItem => document.DocType.TypeName)</td>
+                                    <td>@Html.DisplayFor(modelItem => document.Description)</td>
+                                    <td class="align-middle">
+                                        <div class="row justify-content-center">
+                                            <div class="btn-group">
+                                                <a class="btn btn-sm btn-outline-secondary" asp-action="Download"
+                                            asp-route-id="@document.Id" asp-route-employeeId="@Model.EmployeeId"
+                                            data-toggle="tooltip" title="Előnézet" onclick="openPreview(this)">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </a>
+                                                <a class="btn btn-sm btn-outline-secondary" asp-action="Download"
+                                            asp-route-id="@document.Id" asp-route-employeeId="@Model.EmployeeId"
+                                            data-toggle="tooltip" title="Letöltés" onclick="downloadAttachment(this)">
+                                                    <i class="fas fa-file-download"></i>
+                                                </a>
+                                                <a class="btn btn-sm btn-outline-secondary" asp-action="DeleteFile"
+                                            asp-route-id="@document.Id" asp-route-employeeId="@Model.EmployeeId"
+                                            data-toggle="tooltip" title="Törlés" onclick="deleteAttachment(this)">
+                                                    @* onclick="Submit('DeleteFile','@document.Id', '@Model.EmployeeId');"> *@
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>Nincs csatolt dokumentum.</p>
+            }
+
+        </div>
+        <!-- /.card-body -->
+
+        <!-- card-footer -->
+        <div class="card-footer">
+            <div>
+                <div class="row justify-content-center">
+                    <div class="col-md-2 form-group">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-footer -->
+
+    </form>
+</div>
+<!-- /.card -->
+
+
+<div id="dialog" title="Nézőkép"></div>
+
+<div id="deleteConfirm" title="Megerősítés?">
+    <p class="text-danger">
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
+        Csatolt állomány törlése. Megerősítés esetén a művelet nem vonható vissza!
+    </p>
+</div>
+
+
+<!-- Check DocType: a script a DataSheet.cshtml-ben töltődik be-->
+
+<!-- ajax -->
+
+
+
+<script>
+
+
+
+</script>

@@ -1,0 +1,59 @@
+@model hrmApp.Web.DTO.ProjectDTO
+
+@{
+    Layout = "Layout/_LayoutCard";
+    ViewData["Title"] = "Projekt";
+    ViewData["CardTitleName"] = ViewData["Title"] + " adatai";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+}
+
+<!-- .card-body -->
+<div class="card-body">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th style="width:50%"> @Html.DisplayNameFor(model => model.ProjectName) </th>
+                <td> @Html.DisplayFor(model => model.ProjectName) </td>
+            </tr>
+            <tr>
+                <th style="width:50%"> @Html.DisplayNameFor(model => model.StartDate) </th>
+                <td> @Html.DisplayFor(model => model.StartDate) </td>
+            </tr>
+            <tr>
+                <th style="width:50%"> @Html.DisplayNameFor(model => model.EndDate) </th>
+                <td> @Html.DisplayFor(model => model.EndDate) </td>
+            </tr>
+            <tr>
+                <th style="width:50%"> @Html.DisplayNameFor(model => model.NumberOfEmployee) </th>
+                <td> @Html.DisplayFor(model => model.NumberOfEmployee) </td>
+            </tr>
+            <tr>
+                <th style="width:50%"> @Html.DisplayNameFor(model => model.Description) </th>
+                <td> @Html.DisplayFor(model => model.Description) </td>
+            </tr>
+            <tr>
+                <th style="width:50%"> @Html.DisplayNameFor(model => model.IsActive) </th>
+                <td> @Html.DisplayFor(model => model.IsActive) </td>
+            </tr>
+            <tr>
+                <th style="width:50%"> @Html.DisplayNameFor(model => model.RowVersion) </th>
+                <td> @Html.DisplayFor(model => model.RowVersion) </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- /.card-body -->
+<!-- card-footer -->
+<div class="card-footer">
+    <div>
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <a class="btn btn-primary btn-block" asp-action="Edit" asp-route-id="@Model.Id">Szerkesztés</a>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-secondary btn-block" asp-action="Index">Vissza</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.card-footer -->

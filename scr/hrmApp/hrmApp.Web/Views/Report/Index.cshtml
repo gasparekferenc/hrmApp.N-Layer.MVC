@@ -1,0 +1,78 @@
+
+@using Microsoft.AspNetCore.Authorization
+@using hrmApp.Core.Constants
+@inject IAuthorizationService authorizationService
+@model hrmApp.Web.ViewModels.EmployeeViewModels.EmployeeIndexViewModel
+
+@{
+    Layout = "Layout/_LayoutReport";
+    ViewData["Title"] = "Report";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " készítés";
+}
+
+<div class="card-body">
+    <div id="FilterBtn"></div>
+    <table id="hrmTable" class="table table-bordered table-striped">        
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].SSNumber)</th>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].POEmployee.FirstOrDefault().ProjectOrganization.Project.ProjectName)</th>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].POEmployee.FirstOrDefault().ProjectOrganization.Organization.OrganizationName)</th>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].ProcessStatus.StatusName)</th>
+                <th>@Html.DisplayNameFor(model => model.Employees[0].Job.JobName)</th>
+
+                @* Műveletek jogosultsághoz vannak kötve *@
+                @if ((await authorizationService.AuthorizeAsync(User, PolicyNames.EmployeeHandler)).Succeeded)
+                {
+                    <th>Műveletek</th>
+                }
+
+            </tr>
+        </thead>
+        @if(Model.CurrentProjectId != 0){
+            <tbody>
+                @foreach (var employee in Model.Employees)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => employee.FullName)</td>
+                        <td>@Html.DisplayFor(modelItem => employee.SSNumber)</td>
+                        <td>@Html.DisplayFor(modelItem => employee.POEmployee.FirstOrDefault().ProjectOrganization.Project.ProjectName)</td>
+                        <td>@Html.DisplayFor(modelItem => employee.POEmployee.FirstOrDefault().ProjectOrganization.Organization.OrganizationName)</td>
+                        <td>@Html.DisplayFor(modelItem => employee.ProcessStatus.StatusName)</td>
+                        <td>@Html.DisplayFor(modelItem => employee.Job.JobName)</td>
+
+                        @* Műveletek jogosultsághoz vannak kötve *@
+                        @if ((await authorizationService.AuthorizeAsync(User, PolicyNames.EmployeeHandler)).Succeeded)
+                            {
+                            <td class="align-middle">
+                                <div class="row justify-content-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-outline-secondary" asp-controller="Employee" asp-action="DataSheet" asp-route-id="@employee.Id"
+                                            data-toggle="tooltip" title="Szerkesztés">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-secondary" asp-controller="Employee" asp-action="Details" asp-route-id="@employee.Id"
+                                            data-toggle="tooltip" title="Részletek">
+                                            <i class="fas fa-file-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        }
+        else{            
+        <p>Nincs Projekt...</p>
+        }
+    </table>
+    <!-- /.table-responsive -->
+</div>
+<!-- /.card-body -->
+
+<!-- Init Tables -->
+@section InitTableScripts {
+    <partial name="_InitReportDataTablesScript" />
+}

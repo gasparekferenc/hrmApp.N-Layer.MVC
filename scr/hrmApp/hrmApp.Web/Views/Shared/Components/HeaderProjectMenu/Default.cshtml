@@ -1,0 +1,86 @@
+﻿@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+
+@model hrmApp.Web.ViewModels.ComponentsViewModels.ProjectViewModel
+
+@if (signInManager.IsSignedIn(User))
+{
+    if (Model.CurrentProjectId > 0)
+    {
+
+        var numOfProjects = Model.ProjectsOfUser.Count();
+
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fas fa-project-diagram"></i>
+                &nbsp;@Model.CurrentProjectName&nbsp;
+                <span class="badge badge-primary navbar-badge">@numOfProjects</span>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <span class="dropdown-header bg-light">Projekt kijelölése</span>
+                <div class="dropdown-divider"></div>
+
+
+                @foreach (var project in Model.ProjectsOfUser)
+                {
+                    <!-- Menu Item -->
+                    <a asp-controller="Common" asp-action="SetActiveProject" asp-route-id="@project.Id" class="dropdown-item">
+                        @project.ProjectName
+                    </a>
+                    <div class="dropdown-divider"></div>
+                }
+
+                <!-- ide kell hogy legyen jogosultság -->
+                <div class="dropdown-divider"></div>
+                <a href="/Project" class="dropdown-item">
+                    <i class="fas fa-cog mr-2"></i>
+                    Projekt alapadatok
+                </a>
+            </div>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fas fa-project-diagram"></i>
+                &nbsp;Nincs Projekt/Szervezet!&nbsp;
+                <span class="badge badge-primary navbar-badge">0</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <span class="dropdown-header bg-light">Projekt kijelölése</span>
+                <div class="dropdown-divider"></div>
+
+                <!-- ide kell hogy legyen jogosultság -->
+                <div class="dropdown-divider"></div>
+                <a href="/Project" class="dropdown-item">
+                    <i class="fas fa-cog mr-2"></i>
+                    Projekt alapadatok
+                </a>
+            </div>
+        </li>
+    }
+}
+else
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="fas fa-project-diagram"></i>
+            &nbsp;Projekt lista&nbsp;
+            <span class="badge badge-primary navbar-badge">0</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span class="dropdown-header bg-light">Projekt kijelölése</span>
+            <div class="dropdown-divider"></div>
+
+            <!-- ide kell hogy legyen jogosultság -->
+            <div class="dropdown-divider"></div>
+            <a href="/Project" class="dropdown-item">
+                <i class="fas fa-cog mr-2"></i>
+                Projekt alapadatok
+            </a>
+        </div>
+    </li>
+}

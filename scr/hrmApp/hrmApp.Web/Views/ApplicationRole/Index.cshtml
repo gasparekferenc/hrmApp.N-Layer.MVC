@@ -1,0 +1,85 @@
+﻿@model IEnumerable<hrmApp.Web.ViewModels.RoleClaimsViewModel>
+
+@using hrmApp.Web.ViewModels
+
+@{
+    Layout = "Layout/_LayoutTable";
+    ViewData["Title"] = "Szerepkör";
+    ViewData["CardHeaderName"] = ViewData["Title"] + " létrehozás";
+    ViewData["PageHeaderName"] = ViewData["Title"] + " kezelés";
+    ViewData["CreateButton"] = true;
+
+    async Task ButtonsTemplate(string itemId)
+    {
+        <div class="row justify-content-center">
+            <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@itemId" data-toggle="tooltip"
+                title="Szerkesztés">
+                    <i class="fas fa-pencil-alt"></i>
+                </a>
+                <a class="btn btn-sm btn-outline-secondary" asp-action="ManageClaim" asp-route-id="@itemId"
+                data-toggle="tooltip" title="Jogosultság kezelés">
+                    <i class="fas fa-user-shield"></i>
+                </a>
+                <a class="btn btn-sm btn-outline-secondary" asp-action="Delete" asp-route-id="@itemId" data-toggle="tooltip"
+                title="Törlés">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
+        </div>
+    };
+
+    async Task ClaimsTemplate(List<ClaimsViewModel> roleClaims)
+    {
+        int i = 1;
+        foreach (var claim in roleClaims)
+        {
+            if (claim.HasClaim)
+            {
+                @if (i == 1)
+                {
+                    <span>@claim.ClaimName</span>
+                }
+                else
+                {
+                    <span>, @claim.ClaimName</span>
+                };
+                i++;
+            }
+        }
+    };
+
+}
+
+<div class="card-body">
+    <table id="hrmTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoleName)
+                </th>
+                <th>Jogosultság(ok)</th>
+                <th>Műveletek</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var roleItem in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => roleItem.RoleName)</td>
+                    <td>@{
+                            await ClaimsTemplate(roleItem.RoleClaims);}</td>
+                    <td class="align-middle">@{
+                            await ButtonsTemplate(roleItem.Id);}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- /.table-responsive -->
+</div>
+<!-- /.card-body -->
+
+<!-- Init Tables -->
+@section InitTableScripts {
+<partial name="_InitDataTablesScript" />
+}
