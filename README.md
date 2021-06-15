@@ -4,6 +4,8 @@
 
 ### Szakdolgozat forráskód
 GDF 2021 - Gasparek Ferenc | DWWPR2
+Humán erőforrás menedzsment támogatása közfoglalkoztatási programok megvalósítása során
+Sorszám: 279/2019
 
 ## The main purpose of application
 Users with custom roles can manage data and their relationships of Projects, Organizations and Employees.
