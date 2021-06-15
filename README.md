@@ -6,6 +6,7 @@
 GDF 2021 - Gasparek Ferenc | DWWPR2
 
 Humán erőforrás menedzsment támogatása közfoglalkoztatási programok megvalósítása során
+
 Sorszám: 279/2019
 
 ## The main purpose of application
